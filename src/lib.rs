@@ -235,6 +235,12 @@ impl Mnemonic {
 	}
 
 	pub fn from_words_in(language: Language, words: [u16; MAX_NB_WORDS]) -> Result<Mnemonic, Error> {
+                for i in 0..words.len() {
+                        if word[i] >= 2048 {
+                                return Err(Error::UnknownWord(i));
+                        }
+                }
+                
 		Ok(Mnemonic {
 			lang: language,
 			words: words,
