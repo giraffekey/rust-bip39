@@ -234,6 +234,17 @@ impl Mnemonic {
 		Mnemonic::from_entropy_in(Language::English, entropy)
 	}
 
+	pub fn from_words_in(language: Language, words: [u16; MAX_NB_WORDS]) -> Result<Mnemonic, Error> {
+		Ok(Mnemonic {
+			lang: language,
+			words: words,
+		})
+	}
+
+	pub fn from_words(words: [u16; MAX_NB_WORDS]) -> Result<Mnemonic, Error> {
+		Mnemonic::from_words_in(Language::English, words)
+	}
+
 	/// Generate a new [Mnemonic] in the given language
 	/// with the given randomness source.
 	/// For the different supported word counts, see documentation on [Mnemonic].
@@ -304,6 +315,11 @@ impl Mnemonic {
 	/// Get the language of the [Mnemonic].
 	pub fn language(&self) -> Language {
 		self.lang
+	}
+
+	/// Get the words of the [Mnemonic].
+	pub fn words(&self) -> [u16; MAX_NB_WORDS] {
+		self.words
 	}
 
 	/// Get an iterator over the words.
