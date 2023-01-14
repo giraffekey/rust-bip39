@@ -64,7 +64,6 @@ mod pbkdf2;
 pub use language::Language;
 
 /// The minimum number of words in a mnemonic.
-#[allow(unused)]
 const MIN_NB_WORDS: usize = 12;
 
 /// The maximum number of words in a mnemonic.
@@ -236,6 +235,15 @@ impl Mnemonic {
 
 	pub fn from_words_in(language: Language, words: [u16; MAX_NB_WORDS]) -> Result<Mnemonic, Error> {
                 for i in 0..words.len() {
+                        if words[i] == EOF {
+                                if i % 6 != 0 {
+                                        return Err(Error::BadWordCount(i));
+                                }
+                                if i < MIN_NB_WORDS || i > MAX_NB_WORDS {
+                                        return Err(Error::BadWordCount(i));
+                                }
+                                break;
+                        }
                         if word[i] >= 2048 {
                                 return Err(Error::UnknownWord(i));
                         }
