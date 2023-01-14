@@ -244,7 +244,7 @@ impl Mnemonic {
                                 }
                                 break;
                         }
-                        if word[i] >= 2048 {
+                        if words[i] >= 2048 {
                                 return Err(Error::UnknownWord(i));
                         }
                 }
